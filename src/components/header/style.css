@@ -1,0 +1,32 @@
+#container-header {
+  width: 100%;
+  height: calc(20rem - 3rem);
+  background-color: var(--gray-700);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#container-header #menu-header {
+  width: 100%;
+  margin-top: 1.5rem;
+  margin-right: 3rem;
+
+  display: flex;
+  justify-content: flex-end;
+}
+
+.menu-header-list {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.menu-header-list-item a svg {
+  color: var(--gray-100);
+}
+
+.menu-header-list-item a svg:hover {
+  opacity: 0.8;
+}
