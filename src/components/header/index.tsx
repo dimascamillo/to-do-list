@@ -5,7 +5,7 @@ import {
   User,
 } from "@phosphor-icons/react";
 
-import logo from "../../../public/logo.svg";
+import logo from "../../assets/logo.svg";
 import "./style.css";
 
 interface HeaderProps {

@@ -20,7 +20,7 @@ export function Login() {
     handleSubmit,
     watch,
     reset,
-    formState,
+    // formState,
   } = useForm<NewCicleFormData>({
     resolver: zodResolver(
       newCicleformValidationSchema,
@@ -31,7 +31,7 @@ export function Login() {
     },
   });
 
-  console.log(formState.errors);
+  // console.log(formState.errors);
 
   function handleCreateNewUser(
     data: NewCicleFormData,

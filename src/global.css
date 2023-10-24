@@ -16,13 +16,25 @@
   --danger: #e25858;
 }
 
+:focus {
+  outline: transparent;
+  box-shadow: 0 0 0 2px var(--purple-dark);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html {
   font-size: 62.5%;
 }
 
 body {
-  background-color: var(--gray-500);
+  background-color: var(--gray-600);
   color: var(--gray-100);
+  -webkit-font-smoothing: antialiased;
 }
 
 body,
