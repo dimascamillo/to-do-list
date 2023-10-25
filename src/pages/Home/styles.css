@@ -74,3 +74,89 @@
   border-radius: 8px;
   padding: 0.5rem;
 }
+
+.tasks-card {
+  margin-top: 2.5rem;
+  padding: 1rem;
+  background-color: var(--gray-500);
+  border: 1px solid var(--gray-400);
+  border-radius: 8px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container-card {
+  width: 80%;
+
+  display: flex;
+}
+
+.container-card #finished {
+  margin-right: 1rem;
+
+  display: none;
+}
+
+.trigger-checkbox {
+}
+
+.check-mark {
+  position: relative;
+}
+
+.check-mark svg {
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  fill: transparent;
+
+  cursor: pointer;
+}
+
+.check-mark::before {
+  display: inline-block;
+  content: "";
+  background: transparent;
+  border: 1px solid var(--blue);
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  margin-right: 1rem;
+
+  cursor: pointer;
+}
+
+.container-card
+  #finished:checked
+  ~ .check-mark::before {
+  background: var(--purple-dark);
+  border: 1px solid var(--purple-dark);
+}
+
+.container-card
+  #finished:checked
+  ~ .check-mark
+  svg {
+  fill: var(--gray-100);
+}
+
+.container-card #finished:checked ~ .card-text {
+  text-decoration: line-through;
+}
+
+.card-button {
+  background: transparent;
+  border: 0;
+
+  cursor: pointer;
+}
+
+.card-button svg {
+  fill: var(--gray-100);
+}
+
+.card-button:hover svg {
+  fill: var(--danger);
+}
