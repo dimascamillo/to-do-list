@@ -10,6 +10,7 @@
     "server": "json-server server.json -p 3333 -w"
   },
   "dependencies": {
+    "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^3.3.2",
     "@phosphor-icons/react": "^2.0.13",
     "axios": "^1.5.1",

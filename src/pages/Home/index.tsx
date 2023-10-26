@@ -6,18 +6,51 @@ import {
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ErrorMessage } from "@hookform/error-message";
 import { z } from "zod";
 
 import "./styles.css";
 
+const newCycleFormValidationSchema = z.object({
+  newTask: z
+    .string()
+    .max(
+      50,
+      "O máximo de caracteres permitido são: 50",
+    ),
+  completeTask: z.boolean(),
+});
+
 export function Home() {
-  const { register, handleSubmit, watch } =
-    useForm({});
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(
+      newCycleFormValidationSchema,
+    ),
+  });
 
-  function createNewTask(data: any) {}
+  const { menssageErrorValidationForm } = errors;
 
-  const task = watch("newTask");
+  function createNewTask(data: any) {
+    console.log(data);
+  }
+
+  function saveStatusTask(data: any) {
+    console.log(data);
+  }
+
+  const [task, completeTask] = watch([
+    "newTask",
+    "completeTask",
+  ]);
+
   const isSubmitDisabled = !task; // auxiliary variable
+
+  const isSubmitTaskDisabled = !completeTask; // auxiliary variable
 
   return (
     <main id="container-content">
@@ -32,13 +65,21 @@ export function Home() {
         />
 
         <button
-          type="button"
+          type="submit"
           disabled={isSubmitDisabled}>
           Criar <PlusCircle size={16} />
         </button>
+        <footer>
+          <ErrorMessage
+            errors={errors}
+            name="singleErrorInput"
+          />
+        </footer>
       </form>
 
-      <section id="container-tasks">
+      <form
+        id="container-tasks"
+        onSubmit={handleSubmit(saveStatusTask)}>
         <header>
           <div className="container-tasks-create">
             <span className="tasks-description">
@@ -61,11 +102,11 @@ export function Home() {
           <div className="container-card">
             <label
               className="trigger-checkbox"
-              htmlFor="finished">
+              htmlFor="completeTask">
               <input
                 type="checkbox"
-                name="finished"
-                id="finished"
+                id="completeTask"
+                {...register("completeTask")}
               />
               <span className="check-mark">
                 <Check size={8} />
@@ -82,7 +123,15 @@ export function Home() {
             <Trash size={12} />
           </button>
         </div>
-      </section>
+
+        <div id="save-status-task">
+          <button
+            type="submit"
+            disabled={isSubmitTaskDisabled}>
+            Salvar
+          </button>
+        </div>
+      </form>
     </main>
   );
 }

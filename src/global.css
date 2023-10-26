@@ -44,3 +44,15 @@ select,
 textarea {
   font-family: "Inter", sans-serif;
 }
+
+button {
+  border: 0;
+  border-radius: 8px;
+  font-weight: 600;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+}
