@@ -1,0 +1,8 @@
+{
+  "max-len": 80,
+  "printWidth": 80,
+  "editor.max-len": 80,
+  "editor.printWidth": 80,
+  "prettier.max-len": 80,
+  "prettier.printWidth": 80
+}

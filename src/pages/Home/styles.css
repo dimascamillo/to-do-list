@@ -168,6 +168,8 @@
 #save-status-task {
   display: flex;
   justify-content: flex-end;
+
+  height: 7rem;
 }
 
 #save-status-task > button {

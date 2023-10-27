@@ -1,41 +1,32 @@
-import {
-  Check,
-  PlusCircle,
-  Trash,
-} from "@phosphor-icons/react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Check, PlusCircle, Trash } from "@phosphor-icons/react";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ErrorMessage } from "@hookform/error-message";
 import { z } from "zod";
 
 import "./styles.css";
+import { useState } from "react";
 
 const newCycleFormValidationSchema = z.object({
-  newTask: z
-    .string()
-    .max(
-      50,
-      "O máximo de caracteres permitido são: 50",
-    ),
-  completeTask: z.boolean(),
+  newTask: z.string().max(50, "O máximo de caracteres permitido são: 50"),
+  // completeTask: z.boolean(),
 });
 
+type NewTaskFormInputs = z.infer<typeof newCycleFormValidationSchema>;
+
 export function Home() {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(
-      newCycleFormValidationSchema,
-    ),
+  const { register, handleSubmit, watch } = useForm<NewTaskFormInputs>({
+    resolver: zodResolver(newCycleFormValidationSchema),
   });
 
-  const { menssageErrorValidationForm } = errors;
+  const [myTasks, setMyTasks] = useState<string[]>([]);
 
-  function createNewTask(data: any) {
+  const [task] = watch(["newTask"]);
+
+  function createNewTask(data: NewTaskFormInputs) {
+    setMyTasks((prevTasks) => [...prevTasks, task]);
+    console.log(myTasks);
     console.log(data);
   }
 
@@ -43,20 +34,13 @@ export function Home() {
     console.log(data);
   }
 
-  const [task, completeTask] = watch([
-    "newTask",
-    "completeTask",
-  ]);
-
   const isSubmitDisabled = !task; // auxiliary variable
 
-  const isSubmitTaskDisabled = !completeTask; // auxiliary variable
+  // const isSubmitTaskDisabled = !completeTask; // auxiliary variable
 
   return (
     <main id="container-content">
-      <form
-        onSubmit={handleSubmit(createNewTask)}
-        className="container-input">
+      <form onSubmit={handleSubmit(createNewTask)} className="container-input">
         <input
           id="input-new-tasks"
           type="text"
@@ -64,72 +48,50 @@ export function Home() {
           {...register("newTask")}
         />
 
-        <button
-          type="submit"
-          disabled={isSubmitDisabled}>
+        <button type="submit" disabled={isSubmitDisabled}>
           Criar <PlusCircle size={16} />
         </button>
-        <footer>
-          <ErrorMessage
-            errors={errors}
-            name="singleErrorInput"
-          />
-        </footer>
       </form>
 
-      <form
-        id="container-tasks"
-        onSubmit={handleSubmit(saveStatusTask)}>
+      <form id="container-tasks" onSubmit={handleSubmit(saveStatusTask)}>
         <header>
           <div className="container-tasks-create">
-            <span className="tasks-description">
-              Tarefas criadas
-            </span>
+            <span className="tasks-description">Tarefas criadas</span>
             <span className="tasks-flag">0</span>
           </div>
 
           <div className="container-tasks-finished">
-            <span className="tasks-description">
-              Concluídas
-            </span>
-            <span className="tasks-flag">
-              0 de 5
-            </span>
+            <span className="tasks-description">Concluídas</span>
+            <span className="tasks-flag">0 de 5</span>
           </div>
         </header>
 
-        <div className="tasks-card">
-          <div className="container-card">
-            <label
-              className="trigger-checkbox"
-              htmlFor="completeTask">
-              <input
-                type="checkbox"
-                id="completeTask"
-                {...register("completeTask")}
-              />
-              <span className="check-mark">
-                <Check size={8} />
-              </span>
+        {myTasks.map((task) => {
+          return (
+            <div key={task} className="tasks-card">
+              <div className="container-card">
+                <label className="trigger-checkbox" htmlFor="completeTask">
+                  <input
+                    type="checkbox"
+                    id="completeTask"
+                    // {...register("completeTask")}
+                  />
+                  <span className="check-mark">
+                    <Check size={8} />
+                  </span>
 
-              <p className="card-text">
-                Integer urna interdum massa libero
-                auctor neque turpis turpis semper.
-                Duis vel sed fames integer.
-              </p>
-            </label>
-          </div>
-          <button className="card-button">
-            <Trash size={12} />
-          </button>
-        </div>
+                  <p className="card-text">{task}</p>
+                </label>
+              </div>
+              <button className="card-button">
+                <Trash size={12} />
+              </button>
+            </div>
+          );
+        })}
 
         <div id="save-status-task">
-          <button
-            type="submit"
-            disabled={isSubmitTaskDisabled}>
-            Salvar
-          </button>
+          <button type="submit">Salvar</button>
         </div>
       </form>
     </main>
