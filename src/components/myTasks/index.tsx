@@ -6,6 +6,7 @@ import { useContext } from "react";
 
 // import thereNoTasks from "../../assets/thereNoTasks.svg";
 import "./styles.css";
+import { useTasks } from "../../hooks/useTasks";
 import { TaskContext } from "../../contexts/TasksContext";
 
 // const newCycleTaskComplete = z.object({
@@ -18,12 +19,7 @@ import { TaskContext } from "../../contexts/TasksContext";
 export function MyTasks() {
   const { tasks } = useContext(TaskContext);
 
-  const statusMyTasks = tasks.reduce((result, item) => {
-    if (item.completedTask === "true") {
-      return result + 1;
-    }
-    return result;
-  }, 0);
+  const task = useTasks();
 
   // const { register, handleSubmit, watch } = useForm<newCycleTaskComplete>({
   //   resolver: zodResolver(newCycleTaskComplete),
@@ -50,7 +46,7 @@ export function MyTasks() {
         <div className="container-tasks-finished">
           <span className="tasks-description">Concluídas</span>
           <span className="tasks-flag">
-            {statusMyTasks} de {tasks.length}
+            {task} de {tasks.length}
           </span>
         </div>
       </header>
