@@ -1,48 +1,53 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PlusCircle } from "@phosphor-icons/react";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import "./styles.css";
+import { useContext } from "react";
+import { TaskContext } from "../../contexts/TasksContext";
 
 const newCycleFormValidationSchema = z.object({
-  newTask: z.string().max(50, "O máximo de caracteres permitido são: 50"),
+  description: z.string().max(50, "O máximo de caracteres permitido são: 50"),
 });
 
 type NewTaskFormInputs = z.infer<typeof newCycleFormValidationSchema>;
 
 export function NewTask() {
-  const { register, handleSubmit, watch } = useForm<NewTaskFormInputs>({
+  const { createNewTask } = useContext(TaskContext);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+    reset,
+  } = useForm<NewTaskFormInputs>({
     resolver: zodResolver(newCycleFormValidationSchema),
   });
 
-  const [myTasks, setMyTasks] = useState<string[]>([]);
+  async function handleCreateNewTask(data: NewTaskFormInputs) {
+    const { description } = data;
 
-  const [task] = watch(["newTask"]);
+    await createNewTask({
+      description,
+    });
 
-  function createNewTask(data: NewTaskFormInputs) {
-    setMyTasks((prevTasks) => [...prevTasks, task]);
-    console.log(myTasks);
-    console.log(data);
+    reset();
   }
 
-  const isSubmitDisabled = !task; // auxiliary variable
-
   return (
-    <form onSubmit={handleSubmit(createNewTask)} className="container-input">
+    <form
+      onSubmit={handleSubmit(handleCreateNewTask)}
+      className="container-input"
+    >
       <input
         id="input-new-tasks"
         type="text"
         placeholder="Adicione uma nova tarefa"
-        {...register("newTask")}
+        {...register("description")}
       />
 
-      <button
-        className="button-newTask"
-        type="submit"
-        disabled={isSubmitDisabled}
-      >
+      <button className="button-newTask" type="submit" disabled={isSubmitting}>
         Criar <PlusCircle size={16} />
       </button>
     </form>
