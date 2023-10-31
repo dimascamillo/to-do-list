@@ -112,30 +112,11 @@
   fill: var(--danger) !important;
 }
 
-#save-status-task {
+.container-buttons {
   display: flex;
-  justify-content: flex-end;
-
-  height: 7rem;
+  gap: 1rem;
 }
 
-#save-status-task > button {
-  background: var(--blue-dark);
-  color: var(--gray-100);
-  padding: 0.7rem 1.5rem;
-  margin-top: 2rem;
-
-  transition: 0.2s all;
-}
-
-#save-status-task > button:hover {
-  background: var(--blue);
-}
-
-#save-status-task > button:disabled {
-  display: none;
-}
-
-#save-status-task > button:not(:disabled) {
-  display: block;
+.container-buttons .save:hover > svg {
+  fill: var(--green-200) !important;
 }
