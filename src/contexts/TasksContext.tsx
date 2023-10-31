@@ -1,4 +1,5 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
+import { api } from "../lib/axios";
 
 interface Task {
   id: number;
@@ -6,8 +7,14 @@ interface Task {
   completedTask: string;
 }
 
+interface CreateNewTask {
+  description: string;
+}
+
 interface TaskContextType {
   tasks: Task[];
+  fetchTasks: () => Promise<void>;
+  createNewTask: (data: CreateNewTask) => Promise<void>;
 }
 
 interface TasksProviderProps {
@@ -19,18 +26,29 @@ export const TaskContext = createContext({} as TaskContextType);
 export function TasksProvider({ children }: TasksProviderProps) {
   const [tasks, setMyTasks] = useState<Task[]>([]);
 
-  async function loadMyTasks() {
-    const response = await fetch("http://localhost:3333/tasks");
-    const data = await response.json();
+  async function fetchTasks() {
+    const response = await api.get("/tasks");
 
-    setMyTasks(data);
+    setMyTasks(response.data);
+  }
+
+  async function createNewTask(data: CreateNewTask) {
+    const { description } = data;
+
+    const response = await api.post("/tasks", {
+      description,
+    });
+
+    setMyTasks((state) => [response.data, ...state]);
   }
 
   useEffect(() => {
-    loadMyTasks();
+    fetchTasks();
   }, []);
 
   return (
-    <TaskContext.Provider value={{ tasks }}>{children}</TaskContext.Provider>
+    <TaskContext.Provider value={{ tasks, fetchTasks, createNewTask }}>
+      {children}
+    </TaskContext.Provider>
   );
 }
