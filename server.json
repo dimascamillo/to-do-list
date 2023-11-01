@@ -9,17 +9,9 @@
   ],
   "tasks": [
     {
-      "id": 1,
-      "description": "Teste Task",
-      "completedTask": "true"
-    },
-    {
-      "description": "Fazer amor com a nene",
-      "id": 2
-    },
-    {
-      "description": "Testeee",
-      "id": 3
+      "description": "Implementar Status da Task à Aplicação",
+      "completedTask": "true",
+      "id": 1
     }
   ]
 }

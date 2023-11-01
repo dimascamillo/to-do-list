@@ -9,8 +9,8 @@ interface Task {
 
 interface CreateNewTask {
   description: string;
+  completedTask: string;
 }
-
 interface TaskContextType {
   tasks: Task[];
   fetchTasks: () => Promise<void>;
@@ -33,10 +33,11 @@ export function TasksProvider({ children }: TasksProviderProps) {
   }
 
   async function createNewTask(data: CreateNewTask) {
-    const { description } = data;
+    const { description, completedTask } = data;
 
     const response = await api.post("/tasks", {
       description,
+      completedTask,
     });
 
     setMyTasks((state) => [response.data, ...state]);

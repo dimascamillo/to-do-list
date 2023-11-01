@@ -29,6 +29,7 @@ export function MyTasks() {
 
       {tasks.map((task) => {
         const identifierMyTask = task.description + task.id;
+
         return (
           <div key={task.id} className="tasks-card">
             <div className="container-card">
