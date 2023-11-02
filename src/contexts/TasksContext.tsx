@@ -15,6 +15,7 @@ interface TaskContextType {
   tasks: Task[];
   fetchTasks: () => Promise<void>;
   createNewTask: (data: CreateNewTask) => Promise<void>;
+  deleteTask: (data: Task) => Promise<void>;
 }
 
 interface TasksProviderProps {
@@ -43,12 +44,22 @@ export function TasksProvider({ children }: TasksProviderProps) {
     setMyTasks((state) => [response.data, ...state]);
   }
 
+  async function deleteTask(data: Task) {
+    const { id } = data;
+
+    await api.delete(`/tasks/${id}`);
+
+    setMyTasks((state) => state.filter((task) => task.id !== id));
+  }
+
   useEffect(() => {
     fetchTasks();
   }, []);
 
   return (
-    <TaskContext.Provider value={{ tasks, fetchTasks, createNewTask }}>
+    <TaskContext.Provider
+      value={{ tasks, fetchTasks, createNewTask, deleteTask }}
+    >
       {children}
     </TaskContext.Provider>
   );

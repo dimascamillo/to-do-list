@@ -7,8 +7,7 @@ import { useTasks } from "../../hooks/useTasks";
 import { TaskContext } from "../../contexts/TasksContext";
 
 export function MyTasks() {
-  const { tasks } = useContext(TaskContext);
-
+  const { tasks, deleteTask } = useContext(TaskContext);
   const task = useTasks();
 
   return (
@@ -50,7 +49,7 @@ export function MyTasks() {
               <button className="card-button save">
                 <FloppyDisk size={12} />
               </button>
-              <button className="card-button">
+              <button className="card-button" onClick={() => deleteTask(task)}>
                 <Trash size={12} />
               </button>
             </div>

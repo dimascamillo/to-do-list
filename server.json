@@ -7,11 +7,5 @@
       "password": "123456"
     }
   ],
-  "tasks": [
-    {
-      "description": "Implementar Status da Task à Aplicação",
-      "completedTask": "true",
-      "id": 1
-    }
-  ]
+  "tasks": []
 }
