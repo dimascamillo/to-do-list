@@ -7,19 +7,5 @@
       "password": "123456"
     }
   ],
-  "tasks": [
-    {
-      "id": 1,
-      "description": "Teste Task",
-      "completedTask": "true"
-    },
-    {
-      "description": "Fazer amor com a nene",
-      "id": 2
-    },
-    {
-      "description": "Testeee",
-      "id": 3
-    }
-  ]
+  "tasks": []
 }

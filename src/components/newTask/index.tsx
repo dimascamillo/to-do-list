@@ -9,6 +9,7 @@ import { TaskContext } from "../../contexts/TasksContext";
 
 const newCycleFormValidationSchema = z.object({
   description: z.string().max(50, "O máximo de caracteres permitido são: 50"),
+  completedTask: z.enum(["true", "false"]),
 });
 
 type NewTaskFormInputs = z.infer<typeof newCycleFormValidationSchema>;
@@ -26,10 +27,11 @@ export function NewTask() {
   });
 
   async function handleCreateNewTask(data: NewTaskFormInputs) {
-    const { description } = data;
+    const { description, completedTask } = data;
 
     await createNewTask({
       description,
+      completedTask,
     });
 
     reset();
@@ -46,6 +48,12 @@ export function NewTask() {
         placeholder="Adicione uma nova tarefa"
         {...register("description")}
       />
+
+      <select id="statusMyTasks" {...register("completedTask")}>
+        <option value="">Status da Task</option>
+        <option value="true">Finalizado</option>
+        <option value="false">Em andamento</option>
+      </select>
 
       <button className="button-newTask" type="submit" disabled={isSubmitting}>
         Criar <PlusCircle size={16} />

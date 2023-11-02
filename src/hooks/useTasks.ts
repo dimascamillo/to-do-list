@@ -5,7 +5,7 @@ export function useTasks() {
   const { tasks } = useContext(TaskContext);
 
   const statusMyTasks = tasks.reduce((result, item) => {
-    if (item.completedTask === "true") {
+    if (item.completedTask === 'true') {
       return result + 1;
     }
     return result;
