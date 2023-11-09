@@ -16,6 +16,7 @@ interface TaskContextType {
   fetchTasks: () => Promise<void>;
   createNewTask: (data: CreateNewTask) => Promise<void>;
   deleteTask: (data: Task) => Promise<void>;
+  patchTask: (data: Task) => Promise<void>;
 }
 
 interface TasksProviderProps {
@@ -52,13 +53,23 @@ export function TasksProvider({ children }: TasksProviderProps) {
     setMyTasks((state) => state.filter((task) => task.id !== id));
   }
 
+  async function patchTask(data: Task) {
+    const { id, completedTask } = data;
+
+    await api.patch(`/tasks/${id}`);
+
+    setMyTasks((state) =>
+      state.filter((task) => (task.completedTask = completedTask))
+    );
+  }
+
   useEffect(() => {
     fetchTasks();
   }, []);
 
   return (
     <TaskContext.Provider
-      value={{ tasks, fetchTasks, createNewTask, deleteTask }}
+      value={{ tasks, fetchTasks, createNewTask, deleteTask, patchTask }}
     >
       {children}
     </TaskContext.Provider>

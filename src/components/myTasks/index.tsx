@@ -1,4 +1,4 @@
-import { Check, FloppyDisk, Trash } from "@phosphor-icons/react";
+import { Check, Trash } from "@phosphor-icons/react";
 import { useContext } from "react";
 
 import "./styles.css";
@@ -46,9 +46,6 @@ export function MyTasks() {
               </label>
             </div>
             <div className="container-buttons">
-              <button className="card-button save">
-                <FloppyDisk size={12} />
-              </button>
               <button className="card-button" onClick={() => deleteTask(task)}>
                 <Trash size={12} />
               </button>
