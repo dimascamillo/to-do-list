@@ -9,7 +9,7 @@ import { TaskContext } from "../../contexts/TasksContext";
 
 const newCycleFormValidationSchema = z.object({
   description: z.string().max(50, "O máximo de caracteres permitido são: 50"),
-  completedTask: z.enum(["true", "false"]),
+  completedTask: z.string(),
 });
 
 type NewTaskFormInputs = z.infer<typeof newCycleFormValidationSchema>;
@@ -29,12 +29,18 @@ export function NewTask() {
   async function handleCreateNewTask(data: NewTaskFormInputs) {
     const { description, completedTask } = data;
 
-    await createNewTask({
-      description,
-      completedTask,
-    });
+    try {
+      await createNewTask({
+        description,
+        completedTask,
+      });
 
-    reset();
+      console.log(data);
+
+      reset();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (

@@ -20,7 +20,7 @@ npm run server -> Start Server
 ## RFs (Requisitos funcionais)
 
 - [x] Deve ser possível cadastrar uma nova Task;
-- [ ] Deve ser possível excluir uma Task;
+- [x] Deve ser possível excluir uma Task;
 - [ ] Deve ser possível atualizar o status da Task;
 
 ## RNs (Regras de negócio)
